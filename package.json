@@ -1,14 +1,14 @@
 {
   "name": "create-contrast-app",
-  "version": "0.0.20",
+  "version": "0.0.0",
   "type": "module",
   "description": "A collection of templates for various projects",
   "license": "MIT",
-  "keywords": [
-    "templates",
-    "projects",
-    "collection"
-  ],
+  "keywords": ["templates", "projects", "collection"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/izakdvlpr/create-contrast-app.git"
+  },
   "author": {
     "name": "izakdvlpr",
     "email": "izakdvlpr@gmail.com",
@@ -25,7 +25,7 @@
     "node": ">=20"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
+    "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
     "commander": "^12.1.0",

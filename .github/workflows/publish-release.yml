@@ -12,13 +12,13 @@ jobs:
     permissions:
       contents: write
     env:
+      GH_TOKEN: ${{ secrets.NPM_TOKEN }}
       NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          token: ${{ secrets.NPM_TOKEN }}
 
       - name: Install node.js v20
         uses: actions/setup-node@v4
@@ -50,4 +50,3 @@ jobs:
           commit_author: "GitHub Actions <41898282+github-actions[bot]@users.noreply.github.com>"
           branch: main
           file_pattern: package.json
-          token: ${{ secrets.NPM_TOKEN }}

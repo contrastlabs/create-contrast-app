@@ -4,7 +4,11 @@
   "type": "module",
   "description": "A collection of templates for various projects",
   "license": "MIT",
-  "keywords": ["templates", "projects", "collection"],
+  "keywords": [
+    "templates",
+    "projects",
+    "collection"
+  ],
   "author": {
     "name": "izakdvlpr",
     "email": "izakdvlpr@gmail.com",

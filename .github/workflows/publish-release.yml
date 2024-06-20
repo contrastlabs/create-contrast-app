@@ -33,9 +33,8 @@ jobs:
       - name: Update package.json with release version
         run: |
           sudo apt-get install jq
-          jq ".version = \"${{ steps.get_release_version.outputs.RELEASE_VERSION }}\"" package.json > temp.json
+          jq ".version = \"${{ github.ref_name }}\"" package.json > temp.json
           mv temp.json package.json
-          echo "${{ github.ref_name }}"
           
       # - name: Publish to GitHub Packages
       #   run: npm publish
@@ -46,5 +45,7 @@ jobs:
           commit_message: "chore(release): publish [skip ci]"
           commit_user_name: "GitHub Actions"
           commit_user_email: "41898282+github-actions[bot]@users.noreply.github.com"
+          commit_author: "GitHub Actions <41898282+github-actions[bot]@users.noreply.github.com>"
           branch: main
+          file_pattern: package.json
           token: ${{ secrets.NPM_TOKEN }}

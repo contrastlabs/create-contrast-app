@@ -29,12 +29,16 @@ jobs:
         
       - name: Update package.json with release version
         run: |
-          sed -i "s/\"version\": \".*\"/\"version\": \"${{ steps.get_release_version.outputs.RELEASE_VERSION }}\"/" package.json
-
-      - name: Publish to GitHub Packages
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          sudo apt-get install jq
+          RELEASE_VERSION=${{ steps.get_release_version.outputs.RELEASE_VERSION }}
+          jq ".version = \"${RELEASE_VERSION}\"" package.json > temp.json
+          mv temp.json package.json
+          echo "Updated package.json with release version: ${RELEASE_VERSION}"
+          
+      # - name: Publish to GitHub Packages
+      #   run: npm publish
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Push release commit
         run: |

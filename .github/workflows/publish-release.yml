@@ -30,6 +30,9 @@ jobs:
       - name: Install dependencies
         run: npm install
         
+      - name: Set up git user
+        uses: fregante/setup-git-user@v2
+        
       - name: Update package.json with release version
         run: |
           sudo apt-get install jq
@@ -41,8 +44,7 @@ jobs:
       # - name: Publish to GitHub Packages
       #   run: npm publish
       
-      - name: Set up git user
-        uses: fregante/setup-git-user@v1
+      - name: Push changes to main
         run: |
           git add package.json
           git commit -m "chore(release): publish [skip ci]"

@@ -1,0 +1,43 @@
+name: Publish to GitHub Packages
+
+on:
+  release:
+    types: [created]
+    
+jobs:
+  publish:
+    if: startsWith(github.ref, 'refs/tags/') 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Configure .npmrc
+        run: echo "//npm.pkg.github.com/:_authToken=\${{ secrets.NPM_TOKEN }}" > .npmrc
+
+      - name: Install dependencies
+        run: npm install
+        
+      - name: Set up git user
+        uses: fregante/setup-git-user@v1
+        
+      - name: Update package.json with release version
+        run: |
+          sed -i "s/\"version\": \".*\"/\"version\": \"${{ steps.get_release_version.outputs.RELEASE_VERSION }}\"/" package.json
+
+      - name: Publish to GitHub Packages
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Push release commit
+        run: |
+          git add package.json
+          git commit -m "chore(release): publish [skip ci]"
+          git push origin main

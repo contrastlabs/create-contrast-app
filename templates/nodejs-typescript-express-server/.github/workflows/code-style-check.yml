@@ -1,0 +1,26 @@
+name: Code Style Check
+
+on:
+  push:
+    branches: [develop]
+
+jobs:
+  lint:
+    name: Check lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install node.js v16
+        uses: actions/setup-node@v4
+        with:
+          node-version: 16
+
+      - name: Install dependencies
+        run: npm install --no-package-lock
+
+      - name: Check lint
+        run: npm run lint

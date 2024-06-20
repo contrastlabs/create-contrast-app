@@ -1,0 +1,85 @@
+version: "3.9"
+
+services:
+  api-http-server-dev:
+    container_name: api-http-server-dev
+    image: api-http-server-dev:latest
+    build:
+      context: .
+      target: development
+      dockerfile: Dockerfile.api
+    user: root
+    restart: always
+    tty: true
+    stdin_open: true
+    command: |
+      bash -c "
+        chmod +x ./scripts/wait-for-it.sh && \
+        ./scripts/wait-for-it.sh $DATABASE_HOST $DATABASE_PORT && \
+        npm install && \
+        npm run dev:http
+      "
+    env_file:
+      - .env
+    ports:
+      - "${HTTP_SERVER_PORT}:${HTTP_SERVER_PORT}"
+    volumes:
+      - .:/usr/src/app
+    depends_on:
+      - database
+    networks:
+      - api
+    profiles:
+      - api-dev
+      - api-http-server-prod
+  api-http-server-prod:
+    container_name: api-http-server-prod
+    image: api-http-server-prod:latest
+    build:
+      context: .
+      target: production
+      dockerfile: Dockerfile.api
+    tty: true
+    stdin_open: true
+    user: root
+    restart: always
+    command: |
+      bash -c "
+        ./wait-for-it.sh $DATABASE_HOST $DATABASE_PORT && \
+        npm run start:http
+      "
+    env_file:
+      - .env
+    ports:
+      - "${HTTP_SERVER_PORT}:${HTTP_SERVER_PORT}"
+    depends_on:
+      - database
+    networks:
+      - api
+    profiles:
+      - api-prod
+      - api-http-server-prod
+  database:
+    container_name: database
+    image: "postgres:latest"
+    restart: always
+    environment:
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+      PGPORT: ${DATABASE_PORT}
+    ports:
+      - "${DATABASE_PORT}:${DATABASE_PORT}"
+    volumes:
+      - ./.docker/postgresql/data:/var/lib/postgresql/data
+    networks:
+      - api
+    profiles:
+      - api-prod
+      - api-dev
+      - database
+
+networks:
+  api:
+    name: api
+    driver: bridge

@@ -1,0 +1,38 @@
+{
+  "name": "create-contrast-app",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "A collection of templates for various projects",
+  "license": "MIT",
+  "keywords": ["templates", "projects", "collection"],
+  "author": {
+    "name": "izakdvlpr",
+    "email": "izakdvlpr@gmail.com",
+    "url": "https://izak.tech"
+  },
+  "bin": {
+    "create-contrast-app": "./bin/cli.js"
+  },
+  "scripts": {
+    "lint": "biome check .",
+    "lint:fix": "npm run lint -- --write"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "fs-extra": "^11.2.0",
+    "inquirer": "^9.2.23"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.8.1",
+    "@commitlint/cli": "^19.3.0",
+    "@commitlint/config-conventional": "^19.2.2",
+    "colorette": "^2.0.20",
+    "lefthook": "^1.6.16"
+  }
+}

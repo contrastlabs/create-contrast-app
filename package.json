@@ -1,10 +1,14 @@
 {
   "name": "create-contrast-app",
-  "version": "1.0.0",
+  "version": "0.0.20",
   "type": "module",
   "description": "A collection of templates for various projects",
   "license": "MIT",
-  "keywords": ["templates", "projects", "collection"],
+  "keywords": [
+    "templates",
+    "projects",
+    "collection"
+  ],
   "author": {
     "name": "izakdvlpr",
     "email": "izakdvlpr@gmail.com",

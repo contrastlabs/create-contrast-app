@@ -46,6 +46,7 @@ jobs:
       
       - name: Push changes to main
         run: |
+          git checkout main
           git add package.json
           git commit -m "chore(release): publish [skip ci]"
-          git push origin main
+          git push

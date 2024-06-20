@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -24,9 +26,6 @@ jobs:
       - name: Install dependencies
         run: npm install
         
-      - name: Set up git user
-        uses: fregante/setup-git-user@v2
-
       - name: Configure .npmrc
         run: echo "//npm.pkg.github.com/:_authToken=\${{ secrets.NPM_TOKEN }}" > .npmrc
         
@@ -42,6 +41,9 @@ jobs:
       #   run: npm publish
       
       - name: Push changes to main
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "chore(release): publish [skip ci]"
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package.json
+          git commit -m "chore(release): publish [skip ci]"
+          git push origin main

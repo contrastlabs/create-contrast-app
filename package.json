@@ -1,10 +1,14 @@
 {
   "name": "create-contrast-app",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "description": "A collection of templates for various projects",
   "license": "MIT",
-  "keywords": ["templates", "projects", "collection"],
+  "keywords": [
+    "templates",
+    "projects",
+    "collection"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/izakdvlpr/create-contrast-app.git"

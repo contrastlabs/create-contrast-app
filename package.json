@@ -7,7 +7,10 @@
   "keywords": [
     "templates",
     "projects",
-    "collection"
+    "collection",
+    "create",
+    "contrast",
+    "app"
   ],
   "repository": {
     "type": "git",
@@ -34,13 +37,13 @@
   "dependencies": {
     "commander": "^12.1.0",
     "fs-extra": "^11.2.0",
-    "inquirer": "^9.2.23"
+    "inquirer": "^9.2.23",
+    "colorette": "^2.0.20"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.1",
     "@commitlint/cli": "^19.3.0",
     "@commitlint/config-conventional": "^19.2.2",
-    "colorette": "^2.0.20",
     "lefthook": "^1.6.16"
   }
 }

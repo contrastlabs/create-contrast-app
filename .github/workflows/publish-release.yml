@@ -29,9 +29,6 @@ jobs:
         
       - name: Set up git user
         uses: fregante/setup-git-user@v1
-        
-      - name: Checkout main
-        run: git checkout main
 
       - name: Configure .npmrc
         run: echo "//npm.pkg.github.com/:_authToken=\${{ secrets.NPM_TOKEN }}" > .npmrc
@@ -51,4 +48,4 @@ jobs:
         run: |
           git add package.json
           git commit -m "chore(release): publish [skip ci]"
-          git push
+          git push origin main

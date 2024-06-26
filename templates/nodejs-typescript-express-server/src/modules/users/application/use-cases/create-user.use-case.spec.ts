@@ -25,7 +25,7 @@ describe('Create User Use Case', () => {
     await user.encryptPassword()
 
     vi.spyOn(UserRepository, 'existsByEmail').mockResolvedValue(false)
-    vi.spyOn(UserRepository, 'create').mockResolvedValue(user)
+    vi.spyOn(UserRepository, 'create').mockResolvedValue(<UserEntity>{ id })
 
     const createUserUseCase = new CreateUserUseCase()
 

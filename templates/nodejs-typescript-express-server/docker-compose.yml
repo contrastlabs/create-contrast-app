@@ -1,9 +1,9 @@
 version: "3.9"
 
 services:
-  api-http-server-dev:
-    container_name: api-http-server-dev
-    image: api-http-server-dev:latest
+  api-http-server:
+    container_name: api-http-server
+    image: api-http-server:latest
     build:
       context: .
       target: development
@@ -29,36 +29,6 @@ services:
       - database
     networks:
       - api
-    profiles:
-      - api-dev
-      - api-http-server-prod
-  api-http-server-prod:
-    container_name: api-http-server-prod
-    image: api-http-server-prod:latest
-    build:
-      context: .
-      target: production
-      dockerfile: Dockerfile.api
-    tty: true
-    stdin_open: true
-    user: root
-    restart: always
-    command: |
-      bash -c "
-        ./wait-for-it.sh $DATABASE_HOST $DATABASE_PORT && \
-        npm run start:http
-      "
-    env_file:
-      - .env
-    ports:
-      - "${HTTP_SERVER_PORT}:${HTTP_SERVER_PORT}"
-    depends_on:
-      - database
-    networks:
-      - api
-    profiles:
-      - api-prod
-      - api-http-server-prod
   database:
     container_name: database
     image: "postgres:latest"
@@ -74,10 +44,6 @@ services:
       - ./.docker/postgresql/data:/var/lib/postgresql/data
     networks:
       - api
-    profiles:
-      - api-prod
-      - api-dev
-      - database
 
 networks:
   api:

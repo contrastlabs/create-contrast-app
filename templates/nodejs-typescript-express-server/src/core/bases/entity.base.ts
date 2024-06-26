@@ -21,7 +21,12 @@ export class EntityBase<
   constructor(props: Props, id?: Id) {
     this._id = (isUndefined(id) ? uuid() : id) as Id
 
-    this.props = props
+    this.props = {
+      ...props,
+      createdAt: props.createdAt ?? new Date(),
+      updatedAt: props.updatedAt ?? null,
+      deletedAt: props.deletedAt ?? null,
+    }
   }
 
   get id(): Id {
@@ -38,10 +43,6 @@ export class EntityBase<
 
   get deletedAt(): Date | undefined | null {
     return this.props.deletedAt
-  }
-
-  created(): void {
-    this.props.createdAt = new Date()
   }
 
   updated(): void {

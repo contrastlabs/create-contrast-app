@@ -1,0 +1,24 @@
+export namespace Database {
+  export interface User {
+    id: string
+    name: string
+    email: string
+    password: string
+    created_at: string
+    updated_at: string | null
+  }
+
+  export interface CreateUserInput {
+    name: string
+    email: string
+    password: string
+  }
+
+  export interface CreateUserOutput {
+    id: string
+  }
+
+  export interface FindUserByEmailOutput {
+    id: string
+  }
+}

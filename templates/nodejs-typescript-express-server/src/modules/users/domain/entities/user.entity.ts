@@ -13,10 +13,10 @@ interface UserProps extends EntityProps {
 const UserFields = {
   id: z.string().uuid(),
   name: z.string().min(3).max(255),
-  email: z.string().email(),
+  email: z.string().email().max(255),
   password: z.string().min(6).max(255),
   createdAt: z.coerce.date(),
-  updatedAt: z.coerce.date(),
+  updatedAt: z.coerce.date().optional().nullable(),
 }
 
 export class UserEntity extends EntityBase<UserProps, string> {
@@ -66,8 +66,15 @@ export class UserEntity extends EntityBase<UserProps, string> {
     return /^\$2[ayb]\$.{56}$/.test(this.props.password)
   }
 
+  get #passwordSalt(): number {
+    return 10
+  }
+
   async encryptPassword(): Promise<void> {
-    this.props.password = await bcrypt.hash(this.props.password, 10)
+    this.props.password = await bcrypt.hash(
+      this.props.password,
+      this.#passwordSalt,
+    )
   }
 
   async comparePassword(password: string): Promise<boolean> {
@@ -75,7 +82,10 @@ export class UserEntity extends EntityBase<UserProps, string> {
   }
 
   validate(): void {
-    const validation = z.object(UserFields).safeParse(this.props)
+    const validation = z.object(UserFields).safeParse({
+      id: this.id,
+      ...this.props,
+    })
 
     if (!validation.success) {
       throw new ValidationError(validation.error.issues)

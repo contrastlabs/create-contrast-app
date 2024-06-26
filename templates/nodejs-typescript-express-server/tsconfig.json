@@ -31,6 +31,6 @@
     },
     "typeRoots": ["node_modules/@types", "src/@types"]
   },
-  "exclude": ["dist", "node_modules", "src/**/*.spec.ts", "src/**/*.test.ts"],
-  "include": ["src/**/*.ts"]
+  "exclude": ["dist", "node_modules"],
+  "include": ["src/**/*.ts", "src/**/*.spec.ts", "src/**/*.e2e.spec.ts"]
 }

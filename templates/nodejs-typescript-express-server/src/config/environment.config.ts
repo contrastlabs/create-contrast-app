@@ -13,6 +13,7 @@ const environmentSchema = z.object({
   DATABASE_HOST: z.string(),
   DATABASE_PORT: z.coerce.number().int().positive(),
   DATABASE_NAME: z.string(),
+  DATABASE_SCHEMA: z.string(),
   DATABASE_USER: z.string(),
   DATABASE_PASSWORD: z.string(),
 })

@@ -4,6 +4,7 @@ import swaggerJsDoc from 'swagger-jsdoc'
 import swaggerUi from 'swagger-ui-express'
 
 import { swaggerConfig } from '@/config'
+import { userRoutes } from '@/modules/users/infrastructure/routes'
 import { uptime } from './server'
 
 const routes = Router()
@@ -68,5 +69,7 @@ routes.use(
  *         $ref: '#/components/responses/200'
  */
 routes.get('/openapi.json', (_request, response) => response.json(openApiJson))
+
+routes.use('/users', userRoutes)
 
 export { routes }

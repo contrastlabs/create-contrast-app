@@ -40,10 +40,19 @@ async function run() {
       `--schema ${DATABASE_SCHEMA}`,
       '--create-schema',
       '--migration-file-language sql',
+      '--decamelize true',
       '--lock false',
       '--verbose false',
     ].join(' '),
-  )
+  ).then(({ stdout, stderr }) => {
+    if (stderr) {
+      console.error(stderr)
+
+      process.exit(1)
+    }
+
+    console.log(stdout)
+  })
 }
 
 run()

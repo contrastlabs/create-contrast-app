@@ -26,13 +26,17 @@ services:
     volumes:
       - .:/usr/src/app
     depends_on:
-      - database
+      - postgresql
     networks:
       - api
-  database:
-    container_name: database
+  postgresql:
+    container_name: ${DATABASE_CONTAINER_NAME}
     image: "postgres:latest"
     restart: always
+    tty: true
+    stdin_open: true
+    env_file:
+      - .env
     environment:
       POSTGRES_USER: ${DATABASE_USER}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}

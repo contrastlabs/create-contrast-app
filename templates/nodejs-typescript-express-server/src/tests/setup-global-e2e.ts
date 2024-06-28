@@ -22,7 +22,15 @@ async function dropDatabase() {
 }
 
 async function runMigrations() {
-  return await execSync('npm run database:migrate:up')
+  return await execSync('npm run db:migrate:up').then(({ stdout, stderr }) => {
+    if (stderr) {
+      console.error(stderr)
+
+      process.exit(1)
+    }
+
+    console.log(stdout)
+  })
 }
 
 export async function setup() {
@@ -46,5 +54,5 @@ export async function teardown() {
     await dropDatabase()
   }
 
-  process.exit(0)
+  process.exit(1)
 }

@@ -1,13 +1,12 @@
-import { UseCase } from '@/core/bases'
+import type { UseCase } from '@/core/bases'
 import type { CreateUserDTO } from '@/modules/users/application/dtos'
 import { UserEntity } from '@/modules/users/domain/entities'
 import { UserEmailAlreadyExists } from '@/modules/users/domain/errors'
 import { UserRepository } from '@/modules/users/domain/repositories'
 
-export class CreateUserUseCase extends UseCase<
-  CreateUserDTO.Input,
-  CreateUserDTO.Output
-> {
+export class CreateUserUseCase
+  implements UseCase<CreateUserDTO.Input, CreateUserDTO.Output>
+{
   async execute(input: CreateUserDTO.Input): Promise<CreateUserDTO.Output> {
     const { name, email, password } = input
 

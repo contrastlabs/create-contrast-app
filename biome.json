@@ -50,6 +50,18 @@
         "useNamespaceKeyword": "warn",
         "noArrayIndexKey": "warn"
       }
-    }
+    },
+    "ignore": [
+      "node_modules",
+      "dist",
+      "build",
+      "out",
+      "coverage",
+      "temp",
+      "tmp",
+      ".docker",
+      ".vscode",
+      ".idea"
+    ]
   }
 }

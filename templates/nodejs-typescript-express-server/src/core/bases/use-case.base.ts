@@ -1,3 +1,3 @@
-export abstract class UseCase<I, O = void> {
-  abstract execute(input: I): Promise<O>
+export interface UseCase<I, O = void> {
+  execute(input: I): Promise<O>
 }

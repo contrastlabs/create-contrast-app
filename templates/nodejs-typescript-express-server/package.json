@@ -3,7 +3,16 @@
   "version": "1.0.0",
   "description": "Node.js TypeScript Express Server",
   "license": "MIT",
-  "keywords": ["nodejs", "typescript", "express", "server"],
+  "keywords": [
+    "nodejs",
+    "typescript",
+    "express",
+    "server",
+    "api",
+    "rest",
+    "restful",
+    "restful-api"
+  ],
   "author": {
     "name": "izakdvlpr",
     "email": "izakdvlpr@gmail.com",
@@ -36,7 +45,7 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "express-async-errors": "^3.1.1",
-    "node-pg-migrate": "^7.5.1",
+    "node-pg-migrate": "^7.5.2",
     "pg-promise": "^11.8.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",

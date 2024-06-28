@@ -10,7 +10,7 @@ interface UserProps extends EntityProps {
   password: string
 }
 
-const UserFields = {
+export const UserFields = {
   id: z.string().uuid(),
   name: z.string().min(3).max(255),
   email: z.string().email().max(255),

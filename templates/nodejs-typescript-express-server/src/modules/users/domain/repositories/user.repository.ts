@@ -8,10 +8,10 @@ export class UserRepository {
 
     const [userCreated] = await database.query<[Database.CreateUserOutput]>(
       `
-      INSERT INTO users (name, email, password)
-      VALUES ($1, $2, $3) RETURNING id
+      INSERT INTO users (id, name, email, password)
+      VALUES ($1, $2, $3, $4) RETURNING id
       `,
-      [user.name, user.email, user.password],
+      [user.id, user.name, user.email, user.password],
     )
 
     return UserMapper.toDomain(userCreated)

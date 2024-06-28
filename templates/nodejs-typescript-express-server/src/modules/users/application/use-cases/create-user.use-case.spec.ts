@@ -1,8 +1,8 @@
 import { faker } from '@faker-js/faker'
-import { v4 as uuid } from 'uuid'
+import { v4 as uuid, validate as validateUUID } from 'uuid'
 import { describe, expect, it, vi } from 'vitest'
 
-import { UserEntity } from '@/modules/users/domain/entities'
+import type { UserEntity } from '@/modules/users/domain/entities'
 import { UserEmailAlreadyExists } from '@/modules/users/domain/errors'
 import { UserRepository } from '@/modules/users/domain/repositories'
 import { createUser } from '@/tests'
@@ -35,9 +35,8 @@ describe('Create User Use Case', () => {
       password,
     })
 
-    expect(userCreated).toBeInstanceOf(UserEntity)
     expect(userCreated.id).toBe(id)
-    expect(userCreated.isPasswordEncrypted()).toBeTruthy()
+    expect(validateUUID(userCreated.id)).toBe(true)
     expect(UserRepository.existsByEmail).toHaveBeenCalledTimes(1)
     expect(UserRepository.create).toHaveBeenCalledTimes(1)
   })

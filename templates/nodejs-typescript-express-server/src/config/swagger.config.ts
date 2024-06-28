@@ -114,13 +114,5 @@ export const swaggerConfig: swaggerJsDoc.OAS3Options = {
       },
     },
   },
-  apis: environment.isProd
-    ? [
-        './dist/infrastructure/http/routes.js',
-        './dist/modules/**/infrastructure/http/routes/*.routes.js',
-      ]
-    : [
-        './src/infrastructure/http/routes.ts',
-        './src/modules/**/infrastructure/http/routes/*.routes.ts',
-      ],
+  apis: environment.isProd ? ['./dist/**/*routes.js'] : ['./src/**/*routes.ts'],
 }

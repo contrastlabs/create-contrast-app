@@ -1,13 +1,16 @@
 import bcrypt from 'bcryptjs'
+import { v4 as uuid } from 'uuid'
 import { z } from 'zod'
 
-import { EntityBase, type EntityProps } from '@/core/bases'
+import { EntityBase } from '@/core/bases'
 import { ValidationError } from '@/core/errors'
 
-interface UserProps extends EntityProps {
+interface UserProps {
   name: string
   email: string
   password: string
+  createdAt?: Date
+  updatedAt?: Date | null
 }
 
 export const UserFields = {
@@ -20,6 +23,10 @@ export const UserFields = {
 }
 
 export class UserEntity extends EntityBase<UserProps, string> {
+  get id(): string {
+    return this._id
+  }
+
   get name(): string {
     return this.props.name
   }
@@ -30,6 +37,18 @@ export class UserEntity extends EntityBase<UserProps, string> {
 
   get password(): string {
     return this.props.password
+  }
+
+  get createdAt(): Date {
+    return this.props.createdAt as Date
+  }
+
+  get updatedAt(): Date | undefined | null {
+    return this.props.updatedAt
+  }
+
+  updated(): void {
+    this.props.updatedAt = new Date()
   }
 
   changeName(name: string): void {
@@ -66,22 +85,15 @@ export class UserEntity extends EntityBase<UserProps, string> {
     return /^\$2[ayb]\$.{56}$/.test(this.props.password)
   }
 
-  get #passwordSalt(): number {
-    return 10
-  }
-
   async encryptPassword(): Promise<void> {
-    this.props.password = await bcrypt.hash(
-      this.props.password,
-      this.#passwordSalt,
-    )
+    this.props.password = await bcrypt.hash(this.props.password, 10)
   }
 
   async comparePassword(password: string): Promise<boolean> {
     return await bcrypt.compare(password, this.props.password)
   }
 
-  validate(): void {
+  private validate(): void {
     const validation = z.object(UserFields).safeParse({
       id: this.id,
       ...this.props,
@@ -93,6 +105,21 @@ export class UserEntity extends EntityBase<UserProps, string> {
   }
 
   static create(props: UserProps, id?: string): UserEntity {
+    const user = new UserEntity(
+      {
+        ...props,
+        createdAt: props.createdAt ?? new Date(),
+        updatedAt: props.updatedAt ?? null,
+      },
+      id ?? uuid(),
+    )
+
+    user.validate()
+
+    return user
+  }
+
+  static from(id: string, props: UserProps): UserEntity {
     return new UserEntity(props, id)
   }
 }

@@ -7,18 +7,4 @@ export namespace Database {
     created_at: string
     updated_at: string | null
   }
-
-  export interface CreateUserInput {
-    name: string
-    email: string
-    password: string
-  }
-
-  export interface CreateUserOutput {
-    id: string
-  }
-
-  export interface FindUserByEmailOutput {
-    id: string
-  }
 }

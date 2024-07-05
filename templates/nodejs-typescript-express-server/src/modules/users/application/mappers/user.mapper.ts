@@ -1,4 +1,5 @@
 import type { Mapper } from '@/core/bases'
+import { isNullOrUndefined, isUndefined } from '@/core/utils'
 import type { Database } from '@/infrastructure/database'
 import { UserEntity } from '@/modules/users/domain/entities'
 
@@ -14,37 +15,26 @@ export interface UserJSON {
 export class UserMapper implements Mapper {
   toJSON(user: UserEntity): UserJSON {
     return {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      password: user.password,
-      createdAt: user.createdAt.toISOString(),
-      updatedAt: user.updatedAt?.toISOString() ?? null,
+      id: user?.id ?? undefined,
+      name: user?.name ?? undefined,
+      email: user?.email ?? undefined,
+      password: user?.password ?? undefined,
+      createdAt: user?.createdAt?.toISOString() ?? undefined,
+      updatedAt: user?.updatedAt?.toISOString() ?? null,
     }
   }
 
-  toDomain(user: Partial<Database.User>): UserEntity {
-    return UserEntity.create(
-      {
-        name: user.name as string,
-        email: user.email as string,
-        password: user.password as string,
-        createdAt: new Date(user?.created_at as string),
-        updatedAt: user.updated_at ? new Date(user.updated_at) : null,
-      },
-      user.id,
-    )
-  }
-
-  static from() {
-    return new UserMapper()
-  }
-
-  static toJSON(user: UserEntity) {
-    return UserMapper.from().toJSON(user)
-  }
-
-  static toDomain(user: Partial<Database.User>) {
-    return UserMapper.from().toDomain(user)
+  toDomain(raw: Database.User): UserEntity {
+    return UserEntity.from(raw.id, {
+      name: raw?.name,
+      email: raw?.email,
+      password: raw?.password,
+      createdAt: isUndefined(raw?.created_at)
+        ? undefined
+        : new Date(raw?.created_at),
+      updatedAt: isNullOrUndefined(raw?.updated_at)
+        ? null
+        : new Date(raw?.updated_at),
+    })
   }
 }

@@ -1,9 +1,10 @@
 import type { Request, Response } from 'express'
 
-import { ControllerBase, buildController } from '@/core/bases'
+import type { ControllerBase } from '@/core/bases'
+import { buildController } from '@/core/builders'
 import { CreateUserUseCase } from '@/modules/users/application/use-cases'
 
-class Controller extends ControllerBase {
+class Controller implements ControllerBase {
   async handle(request: Request, response: Response): Promise<void> {
     const { name, email, password } = request.manager.data.body
 

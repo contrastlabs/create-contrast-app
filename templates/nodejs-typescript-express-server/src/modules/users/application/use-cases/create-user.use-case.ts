@@ -7,10 +7,12 @@ import { UserRepository } from '@/modules/users/domain/repositories'
 export class CreateUserUseCase
   implements UseCase<CreateUserDTO.Input, CreateUserDTO.Output>
 {
+  private readonly userRepository: UserRepository = new UserRepository()
+
   async execute(input: CreateUserDTO.Input): Promise<CreateUserDTO.Output> {
     const { name, email, password } = input
 
-    const emailExists = await UserRepository.existsByEmail(email)
+    const emailExists = await this.userRepository.existsByEmail(email)
 
     if (emailExists) {
       throw new UserEmailAlreadyExists()
@@ -24,9 +26,7 @@ export class CreateUserUseCase
 
     await user.encryptPassword()
 
-    user.validate()
-
-    const userCreated = await UserRepository.create(user)
+    const userCreated = await this.userRepository.create(user)
 
     return userCreated
   }

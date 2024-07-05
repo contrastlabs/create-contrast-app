@@ -1,12 +1,12 @@
-import { type Database, database } from '@/infrastructure/database'
+import { database } from '@/infrastructure/database'
 import { UserMapper } from '@/modules/users/application/mappers'
 import type { UserEntity } from '../entities'
 
 export class UserRepository {
-  static async create(user: UserEntity): Promise<UserEntity> {
+  async create(user: UserEntity): Promise<UserEntity> {
     await database.connect()
 
-    const [userCreated] = await database.query<[Database.CreateUserOutput]>(
+    const [userCreated] = await database.query(
       `
       INSERT INTO users (id, name, email, password)
       VALUES ($1, $2, $3, $4) RETURNING id
@@ -14,13 +14,15 @@ export class UserRepository {
       [user.id, user.name, user.email, user.password],
     )
 
-    return UserMapper.toDomain(userCreated)
+    const userMapper = new UserMapper()
+
+    return userMapper.toDomain(userCreated)
   }
 
-  static async existsByEmail(email: string): Promise<boolean> {
+  async existsByEmail(email: string): Promise<boolean> {
     await database.connect()
 
-    const [user] = await database.query<[Database.FindUserByEmailOutput]>(
+    const [user] = await database.query(
       'SELECT id FROM users WHERE email = $1',
       [email],
     )

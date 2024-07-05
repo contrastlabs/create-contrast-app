@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { buildValidation } from '@/core/bases'
+import { buildValidation } from '@/core/builders'
 import { UserFields } from '@/modules/users/domain/entities'
 
 export const CreateUserValidation = buildValidation(

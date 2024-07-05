@@ -2,7 +2,7 @@ ename: Unit and Integration Tests
 
 on:
   push:
-    branches: [main]
+    branches: [develop]
 
 jobs:
   unit-and-integration-tests:

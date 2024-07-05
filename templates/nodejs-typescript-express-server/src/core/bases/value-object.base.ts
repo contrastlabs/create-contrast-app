@@ -1,7 +1,7 @@
-export class ValueObjectBase<ValueObjectProps> {
-  readonly props: ValueObjectProps
+export class ValueObjectBase<Props> {
+  readonly props: Props
 
-  constructor(props: ValueObjectProps) {
+  constructor(props: Props) {
     this.props = props
   }
 }

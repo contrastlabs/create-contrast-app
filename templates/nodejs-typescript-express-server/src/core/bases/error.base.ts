@@ -2,13 +2,13 @@ export class ErrorBase {
   message: string
   code: string
   status: number
-  data?: any
+  details?: any
 
-  constructor(message: string, code: string, status: number, data?: any) {
+  constructor(message: string, code: string, status: number, details?: any) {
     this.message = message
     this.code = code
     this.status = status
-    this.data = data
+    this.details = details
   }
 
   toJSON() {
@@ -16,7 +16,7 @@ export class ErrorBase {
       message: this.message,
       code: this.code,
       status: this.status,
-      data: this.data,
+      details: this.details,
     }
   }
 }

@@ -11,7 +11,7 @@ interface UserOverrides {
   updatedAt?: Date
 }
 
-export function createUser(overrides?: UserOverrides): UserEntity {
+export function createFakeUser(overrides?: UserOverrides): UserEntity {
   return UserEntity.create(
     {
       name: overrides?.name ?? faker.internet.displayName(),

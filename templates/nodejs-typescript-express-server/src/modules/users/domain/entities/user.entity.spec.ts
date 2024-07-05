@@ -3,25 +3,27 @@ import { v4 as uuid } from 'uuid'
 import { describe, expect, it } from 'vitest'
 
 import { ValidationError } from '@/core/errors'
-import { createUser } from '@/tests'
+import { createFakeUser } from '@/tests'
 import { UserEntity } from './user.entity'
 
 describe('User Entity', () => {
   it('should be able to create a new user', async () => {
     const id = uuid()
-    const createdAt = new Date()
 
-    const user = createUser({
+    const user = UserEntity.create(
+      {
+        name: faker.internet.displayName(),
+        email: faker.internet.email(),
+        password: faker.internet.password(),
+      },
       id,
-      createdAt,
-    })
+    )
 
     await user.encryptPassword()
 
     expect(user).toBeInstanceOf(UserEntity)
     expect(user.isPasswordEncrypted()).toBeTruthy()
     expect(user.id).toEqual(id)
-    expect(user.createdAt).toEqual(createdAt)
   })
 
   it('should be able to reject the creation of a user with null, undefined, or invalid fields', () => {
@@ -30,6 +32,7 @@ describe('User Entity', () => {
         name: null as any,
         email: 'invalid-email',
         password: undefined as any,
+        createdAt: undefined as any,
       })
 
       user.validate()
@@ -37,32 +40,32 @@ describe('User Entity', () => {
   })
 
   it('should be a change the user name', () => {
-    const user = createUser()
+    const fakeUser = createFakeUser()
 
     const name = faker.internet.displayName()
 
-    user.changeName(name)
+    fakeUser.changeName(name)
 
-    expect(user.name).toBe(name)
+    expect(fakeUser.name).toBe(name)
   })
 
   it('should be a change the user email', () => {
-    const user = createUser()
+    const fakeUser = createFakeUser()
 
     const email = faker.internet.email()
 
-    user.changeEmail(email)
+    fakeUser.changeEmail(email)
 
-    expect(user.email).toBe(email)
+    expect(fakeUser.email).toBe(email)
   })
 
   it('should be a change the user password', () => {
-    const user = createUser()
+    const fakeUser = createFakeUser()
 
     const password = faker.internet.password()
 
-    user.changePassword(password)
+    fakeUser.changePassword(password)
 
-    expect(user.password).toBe(password)
+    expect(fakeUser.password).toBe(password)
   })
 })

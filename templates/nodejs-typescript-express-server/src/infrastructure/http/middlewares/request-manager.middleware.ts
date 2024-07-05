@@ -1,6 +1,7 @@
 import type { NextFunction, Request, Response } from 'express'
 
-import { MiddlewareBase, buildMiddleware } from '@/core/bases'
+import { MiddlewareBase } from '@/core/bases'
+import { buildMiddleware } from '@/core/builders'
 
 type Data = Record<string, any>
 

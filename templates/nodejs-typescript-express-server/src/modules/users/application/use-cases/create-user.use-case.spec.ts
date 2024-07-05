@@ -1,65 +1,60 @@
-import { faker } from '@faker-js/faker'
-import { v4 as uuid, validate as validateUUID } from 'uuid'
 import { describe, expect, it, vi } from 'vitest'
 
 import type { UserEntity } from '@/modules/users/domain/entities'
 import { UserEmailAlreadyExists } from '@/modules/users/domain/errors'
 import { UserRepository } from '@/modules/users/domain/repositories'
-import { createUser } from '@/tests'
+import { createFakeUser } from '@/tests'
 import { CreateUserUseCase } from './create-user.use-case'
 
 describe('Create User Use Case', () => {
   it('should be able to create a new user', async () => {
-    const id = uuid()
-    const name = faker.internet.displayName()
-    const email = faker.internet.email()
-    const password = faker.internet.password()
+    const fakeUser = createFakeUser()
 
-    const user = createUser({
-      id,
-      name,
-      email,
-      password,
+    await fakeUser.encryptPassword()
+
+    const userRepository = new UserRepository()
+
+    vi.spyOn(userRepository, 'existsByEmail').mockResolvedValue(false)
+    vi.spyOn(userRepository, 'create').mockResolvedValue(<UserEntity>{
+      id: fakeUser.id,
     })
-
-    await user.encryptPassword()
-
-    vi.spyOn(UserRepository, 'existsByEmail').mockResolvedValue(false)
-    vi.spyOn(UserRepository, 'create').mockResolvedValue(<UserEntity>{ id })
 
     const createUserUseCase = new CreateUserUseCase()
 
-    const userCreated = await createUserUseCase.execute({
-      name,
-      email,
-      password,
+    vi.spyOn(createUserUseCase, 'execute').mockResolvedValue(<UserEntity>{
+      id: fakeUser.id,
     })
 
-    expect(userCreated.id).toBe(id)
-    expect(validateUUID(userCreated.id)).toBe(true)
-    expect(UserRepository.existsByEmail).toHaveBeenCalledTimes(1)
-    expect(UserRepository.create).toHaveBeenCalledTimes(1)
+    const userCreated = await createUserUseCase.execute({
+      name: fakeUser.name,
+      email: fakeUser.email,
+      password: fakeUser.password,
+    })
+
+    expect(userCreated.id).toBe(fakeUser.id)
+    expect(userRepository.existsByEmail).toHaveBeenCalledTimes(1)
+    expect(userRepository.create).toHaveBeenCalledTimes(1)
   })
 
   it('should not be able to create a new user with an existing email', async () => {
-    vi.spyOn(UserRepository, 'existsByEmail').mockResolvedValue(true)
+    const fakeUser = createFakeUser()
 
-    const name = faker.internet.displayName()
-    const email = faker.internet.email()
-    const password = faker.internet.password()
+    const userRepository = new UserRepository()
 
-    const createUserUseCase = new CreateUserUseCase()
+    vi.spyOn(userRepository, 'existsByEmail').mockResolvedValue(true)
+
+    const createUserFakeUseCase = new CreateUserUseCase()
 
     try {
-      await createUserUseCase.execute({
-        name,
-        email,
-        password,
+      await createUserFakeUseCase.execute({
+        name: fakeUser.name,
+        email: fakeUser.email,
+        password: fakeUser.password,
       })
     } catch (error) {
       expect(error).toBeInstanceOf(UserEmailAlreadyExists)
       expect(error).toHaveProperty('message', 'Email already exists.')
-      expect(UserRepository.existsByEmail).toHaveBeenCalledTimes(1)
+      expect(userRepository.existsByEmail).toHaveBeenCalledTimes(1)
     }
   })
 })

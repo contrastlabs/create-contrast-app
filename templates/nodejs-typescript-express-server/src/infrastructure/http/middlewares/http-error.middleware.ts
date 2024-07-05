@@ -1,7 +1,8 @@
 import type { NextFunction, Request, Response } from 'express'
 
 import { ErrorBase } from '@/core/bases'
-import { MiddlewareBase, buildMiddleware } from '@/core/bases'
+import { MiddlewareBase } from '@/core/bases'
+import { buildMiddleware } from '@/core/builders'
 import { InternalServerError } from '@/core/errors'
 
 class Middleware extends MiddlewareBase {

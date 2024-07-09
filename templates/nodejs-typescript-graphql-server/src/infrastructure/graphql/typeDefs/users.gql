@@ -1,0 +1,13 @@
+scalar Date
+
+type User {
+  id: Int!
+  name: String!
+  age: Int!
+  createdAt: Date!
+}
+
+type Query {
+  users: [User]
+  getUserById(id: Int!): User
+}

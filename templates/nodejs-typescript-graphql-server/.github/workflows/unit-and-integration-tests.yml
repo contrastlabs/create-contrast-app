@@ -1,0 +1,26 @@
+ename: Unit and Integration Tests
+
+on:
+  push:
+    branches: [develop]
+
+jobs:
+  unit-and-integration-tests:
+    name: Unit and Integration Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install node.js v20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      
+      - name: Install dependencies
+        run: npm install --no-package-lock
+
+      - name: Run Unit and Integration tests
+        run: npm run test

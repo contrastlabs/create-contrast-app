@@ -6,6 +6,13 @@ import { UserRepository } from '@/modules/users/domain/repositories'
 import { createFakeUser } from '@/tests'
 import { CreateUserUseCase } from './create-user.use-case'
 
+vi.mock('@/modules/users/domain/repositories/user.repository', () => ({
+  UserRepository: vi.fn().mockReturnValue({
+    create: vi.fn(),
+    existsByEmail: vi.fn(),
+  }),
+}))
+
 describe('Create User Use Case', () => {
   it('should be able to create a new user', async () => {
     const fakeUser = createFakeUser()
@@ -14,16 +21,13 @@ describe('Create User Use Case', () => {
 
     const userRepository = new UserRepository()
 
-    vi.spyOn(userRepository, 'existsByEmail').mockResolvedValue(false)
-    vi.spyOn(userRepository, 'create').mockResolvedValue(<UserEntity>{
+    vi.mocked(userRepository.existsByEmail).mockResolvedValue(false)
+
+    vi.mocked(userRepository.create).mockResolvedValue(<UserEntity>{
       id: fakeUser.id,
     })
 
     const createUserUseCase = new CreateUserUseCase()
-
-    vi.spyOn(createUserUseCase, 'execute').mockResolvedValue(<UserEntity>{
-      id: fakeUser.id,
-    })
 
     const userCreated = await createUserUseCase.execute({
       name: fakeUser.name,
@@ -41,7 +45,7 @@ describe('Create User Use Case', () => {
 
     const userRepository = new UserRepository()
 
-    vi.spyOn(userRepository, 'existsByEmail').mockResolvedValue(true)
+    vi.mocked(userRepository.existsByEmail).mockResolvedValue(true)
 
     const createUserFakeUseCase = new CreateUserUseCase()
 

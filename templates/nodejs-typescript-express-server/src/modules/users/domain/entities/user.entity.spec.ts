@@ -28,14 +28,12 @@ describe('User Entity', () => {
 
   it('should be able to reject the creation of a user with null, undefined, or invalid fields', () => {
     expect(() => {
-      const user = UserEntity.create({
+      UserEntity.create({
         name: null as any,
         email: 'invalid-email',
         password: undefined as any,
         createdAt: undefined as any,
       })
-
-      user.validate()
     }).toThrow(ValidationError)
   })
 

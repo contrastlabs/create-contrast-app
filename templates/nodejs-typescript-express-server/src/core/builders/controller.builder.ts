@@ -12,9 +12,9 @@ export function buildController<I extends ControllerInstance>(
   Controller: I,
 ): ControllerConfig<I> {
   function make() {
-    const middleware = new Controller()
+    const controller = new Controller()
 
-    return middleware.handle.bind(middleware)
+    return controller.handle.bind(controller)
   }
 
   return {

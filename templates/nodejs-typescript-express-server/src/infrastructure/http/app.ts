@@ -12,7 +12,7 @@ import {
 import { routes } from './routes'
 
 const app = express()
-const logger = Logger.from('Server')
+const logger = Logger.from('HTTPServer')
 
 app.disable('x-powered-by')
 

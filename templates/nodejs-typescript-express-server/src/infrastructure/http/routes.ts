@@ -5,7 +5,6 @@ import swaggerUi from 'swagger-ui-express'
 
 import { swaggerConfig } from '@/config'
 import { userRoutes } from '@/modules/users/infrastructure/routes'
-import { uptime } from './server'
 
 const routes = Router()
 
@@ -21,20 +20,8 @@ const routes = Router()
  *         $ref: '#/components/responses/200'
  */
 routes.get('/helthz', (_request, response) => {
-  const totalMemory = os.totalmem()
-  const freeMemory = os.freemem()
-  const usedMemory = totalMemory - freeMemory
-
   return response.json({
     hostname: os.hostname(),
-    httpServerUptime: uptime,
-    osUptime: os.uptime(),
-    cpus: os.cpus().length,
-    memory: {
-      total: totalMemory,
-      free: freeMemory,
-      used: usedMemory,
-    },
   })
 })
 

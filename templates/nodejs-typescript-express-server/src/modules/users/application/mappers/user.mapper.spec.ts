@@ -7,16 +7,16 @@ describe('User Mapper', () => {
   it('should convert user entity to JSON', () => {
     const userMapper = new UserMapper()
 
-    const userCreated = createFakeUser()
+    const fakeUser = createFakeUser()
 
-    const userJSON = userMapper.toJSON(userCreated)
+    const userJSON = userMapper.toJSON(fakeUser)
 
     expect(userJSON).toEqual({
-      id: userCreated.id.toString(),
-      name: userCreated.name,
-      email: userCreated.email,
-      password: userCreated.password,
-      createdAt: userCreated.createdAt.toISOString(),
+      id: fakeUser.id.toString(),
+      name: fakeUser.name,
+      email: fakeUser.email,
+      password: fakeUser.password,
+      createdAt: fakeUser.createdAt.toISOString(),
       updatedAt: null,
     })
   })
@@ -24,17 +24,17 @@ describe('User Mapper', () => {
   it('should convert database user to user entity', () => {
     const userMapper = new UserMapper()
 
-    const userCreated = createFakeUser()
+    const fakeUser = createFakeUser()
 
     const userEntity = userMapper.toDomain({
-      id: userCreated.id.toString(),
-      name: userCreated.name,
-      email: userCreated.email,
-      password: userCreated.password,
-      created_at: userCreated.createdAt.toISOString(),
+      id: fakeUser.id.toString(),
+      name: fakeUser.name,
+      email: fakeUser.email,
+      password: fakeUser.password,
+      created_at: fakeUser.createdAt.toISOString(),
       updated_at: null,
     })
 
-    expect(userEntity).toEqual(userCreated)
+    expect(userEntity).toEqual(fakeUser)
   })
 })

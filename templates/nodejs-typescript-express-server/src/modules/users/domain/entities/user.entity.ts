@@ -47,10 +47,6 @@ export class UserEntity extends EntityBase<UserProps, string> {
     return this.props.updatedAt
   }
 
-  updated(): void {
-    this.props.updatedAt = new Date()
-  }
-
   changeName(name: string): void {
     const validation = UserFields.name.optional().safeParse(name)
 
@@ -91,6 +87,10 @@ export class UserEntity extends EntityBase<UserProps, string> {
 
   async comparePassword(password: string): Promise<boolean> {
     return await bcrypt.compare(password, this.props.password)
+  }
+
+  updated(): void {
+    this.props.updatedAt = new Date()
   }
 
   private validate(): void {

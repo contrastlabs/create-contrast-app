@@ -17,6 +17,8 @@ services:
         chmod +x ./scripts/wait-for-it.sh && \
         ./scripts/wait-for-it.sh $DATABASE_HOST $DATABASE_PORT && \
         npm install && \
+        npm run db:migrate:up && \
+        npm run db:seed:run && \
         npm run dev:http
       "
     env_file:

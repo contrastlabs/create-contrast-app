@@ -1,1 +1,1 @@
-# nodejs-typescript-apollo-graphql-server
+# typescript-apollo-graphql-server

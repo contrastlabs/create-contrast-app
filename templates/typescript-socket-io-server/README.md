@@ -1,1 +1,1 @@
-# nodejs-typescript-socket-io-server
+# typescript-socket-io-server

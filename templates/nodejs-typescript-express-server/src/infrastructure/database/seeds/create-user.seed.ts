@@ -5,7 +5,7 @@ export async function createUserSeed() {
   await database.connect()
 
   const [userExists] = await database.query(
-    'SELECT ID FROM users WHERE email = $1',
+    'SELECT id FROM users WHERE email = $1',
     ['jhondoe@example.com'],
   )
 

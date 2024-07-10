@@ -1,0 +1,59 @@
+{
+  "name": "nodejs-typescript-socket-io-server",
+  "version": "1.0.0",
+  "description": "TypeScript Socket.io Server",
+  "license": "MIT",
+  "keywords": [
+    "nodejs",
+    "typescript",
+    "socket.io",
+    "websocket",
+    "server",
+    "api",
+    "backend"
+  ],
+  "author": {
+    "name": "izakdvlpr",
+    "email": "izakdvlpr@gmail.com",
+    "url": "https://izak.tech"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "clean": "rm -rf dist coverage",
+    "lint": "biome check .",
+    "lint:fix": "npm run lint -- --write",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "vitest run -c vitest-e2e.config.ts",
+    "test:e2e:watch": "vitest -c vitest-e2e.config.ts",
+    "test:cov": "vitest run --coverage",
+    "dev:websocket": "tsx watch ./src/infrastructure/websocket/index.ts",
+    "build": "tsc --noEmit false && tsconfig-replace-paths",
+    "start:websocket": "node ./dist/infrastructure/websocket/index.js"
+  },
+  "dependencies": {
+    "colorette": "^2.0.20",
+    "dotenv": "^16.4.5",
+    "socket.io": "^4.7.5",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.8.1",
+    "@commitlint/cli": "^19.3.0",
+    "@commitlint/config-conventional": "^19.2.2",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.14.5",
+    "@types/supertest": "^6.0.2",
+    "@vitest/coverage-v8": "^1.6.0",
+    "lefthook": "^1.6.16",
+    "socket.io-client": "^4.7.5",
+    "supertest": "^7.0.0",
+    "tsconfig-replace-paths": "^0.0.14",
+    "tsx": "^4.15.6",
+    "typescript": "^5.4.5",
+    "vitest": "^1.6.0"
+  }
+}

@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  api-websocket-server:
+    container_name: api-websocket-server
+    image: api-websocket-server:latest
+    build:
+      context: .
+      target: development
+      dockerfile: Dockerfile.api
+    user: root
+    restart: always
+    tty: true
+    stdin_open: true
+    command: |
+      bash -c "
+        npm install && \
+        npm run dev:websocket
+      "
+    env_file:
+      - .env
+    ports:
+      - "${WEBSOCKET_SERVER_PORT}:${WEBSOCKET_SERVER_PORT}"
+    volumes:
+      - .:/usr/src/app
+    networks:
+      - api
+
+networks:
+  api:
+    name: api
+    driver: bridge

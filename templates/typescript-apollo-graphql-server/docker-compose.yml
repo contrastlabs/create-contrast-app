@@ -1,13 +1,13 @@
 version: "3.9"
 
 services:
-  api-graphql-server:
-    container_name: api-graphql-server
-    image: api-graphql-server:latest
+  graphql-server:
+    container_name: graphql-server
+    image: graphql-server:latest
     build:
       context: .
       target: development
-      dockerfile: Dockerfile.api
+      dockerfile: Dockerfile
     user: root
     restart: always
     tty: true
@@ -24,9 +24,9 @@ services:
     volumes:
       - .:/usr/src/app
     networks:
-      - api
+      - graphql-server
 
 networks:
-  api:
-    name: api
+  graphql-server:
+    name: graphql-server
     driver: bridge

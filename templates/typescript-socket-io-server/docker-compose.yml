@@ -1,13 +1,13 @@
 version: "3.9"
 
 services:
-  api-websocket-server:
-    container_name: api-websocket-server
-    image: api-websocket-server:latest
+  websocket-server:
+    container_name: websocket-server
+    image: websocket-server:latest
     build:
       context: .
       target: development
-      dockerfile: Dockerfile.api
+      dockerfile: Dockerfile
     user: root
     restart: always
     tty: true
@@ -24,9 +24,9 @@ services:
     volumes:
       - .:/usr/src/app
     networks:
-      - api
+      - websocket-server
 
 networks:
-  api:
-    name: api
+  websocket-server:
+    name: websocket-server
     driver: bridge

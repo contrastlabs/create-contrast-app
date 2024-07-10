@@ -1,13 +1,13 @@
 version: "3.9"
 
 services:
-  api-http-server:
-    container_name: api-http-server
-    image: api-http-server:latest
+  http-server:
+    container_name: http-server
+    image: http-server:latest
     build:
       context: .
       target: development
-      dockerfile: Dockerfile.api
+      dockerfile: Dockerfile
     user: root
     restart: always
     tty: true
@@ -30,7 +30,7 @@ services:
     depends_on:
       - postgresql
     networks:
-      - api
+      - http-server
   postgresql:
     container_name: ${DATABASE_CONTAINER_NAME}
     image: "postgres:latest"
@@ -49,9 +49,9 @@ services:
     volumes:
       - ./.docker/postgresql/data:/var/lib/postgresql/data
     networks:
-      - api
+      - http-server
 
 networks:
-  api:
-    name: api
+  http-server:
+    name: http-server
     driver: bridge

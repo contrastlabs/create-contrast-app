@@ -49,16 +49,13 @@ describe('Create User Use Case', () => {
 
     const createUserFakeUseCase = new CreateUserUseCase()
 
-    try {
-      await createUserFakeUseCase.execute({
+    await expect(
+      createUserFakeUseCase.execute({
         name: fakeUser.name,
         email: fakeUser.email,
         password: fakeUser.password,
-      })
-    } catch (error) {
-      expect(error).toBeInstanceOf(UserEmailAlreadyExists)
-      expect(error).toHaveProperty('message', 'Email already exists.')
-      expect(userRepository.existsByEmail).toHaveBeenCalledTimes(1)
-    }
+      }),
+    ).rejects.toThrow(UserEmailAlreadyExists)
+    expect(userRepository.existsByEmail).toHaveBeenCalledTimes(1)
   })
 })

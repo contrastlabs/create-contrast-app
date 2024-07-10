@@ -7,6 +7,7 @@ import { UserRepository } from './user.repository'
 vi.mock('@/infrastructure/database/client', () => ({
   database: {
     query: vi.fn(),
+    connect: vi.fn(),
   },
 }))
 

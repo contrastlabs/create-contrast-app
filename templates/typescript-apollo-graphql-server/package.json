@@ -1,17 +1,16 @@
 {
-  "name": "nodejs-typescript-graphql-server",
+  "name": "typescript-apollo-graphql-server",
   "version": "1.0.0",
-  "description": "Node.js TypeScript GraphQL Server",
+  "description": "TypeScript Apollo GraphQL Server",
   "license": "MIT",
   "keywords": [
     "nodejs",
     "typescript",
+    "apollo",
     "graphql",
     "server",
     "api",
-    "rest",
-    "restful",
-    "restful-api"
+    "backend"
   ],
   "author": {
     "name": "izakdvlpr",

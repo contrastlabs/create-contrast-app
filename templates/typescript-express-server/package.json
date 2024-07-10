@@ -1,7 +1,7 @@
 {
-  "name": "nodejs-typescript-express-server",
+  "name": "typescript-express-server",
   "version": "1.0.0",
-  "description": "Node.js TypeScript Express Server",
+  "description": "TypeScript Express Server",
   "license": "MIT",
   "keywords": [
     "nodejs",

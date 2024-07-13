@@ -22,7 +22,7 @@
     "url": "https://izak.tech"
   },
   "bin": {
-    "create-contrast-app": "./bin/cli.js"
+    "create-contrast-app": "./cli/index.js"
   },
   "scripts": {
     "lint": "biome check .",
@@ -35,10 +35,10 @@
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
+    "colorette": "^2.0.20",
     "commander": "^12.1.0",
     "fs-extra": "^11.2.0",
-    "inquirer": "^9.2.23",
-    "colorette": "^2.0.20"
+    "inquirer": "^9.2.23"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.1",

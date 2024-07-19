@@ -1,9 +1,9 @@
 {
   "name": "create-contrast-app",
   "version": "0.0.6",
-  "type": "module",
   "description": "A collection of templates for various projects",
   "license": "MIT",
+  "type": "module",
   "keywords": [
     "templates",
     "projects",
@@ -22,7 +22,7 @@
     "url": "https://izak.tech"
   },
   "bin": {
-    "create-contrast-app": "./cli/index.js"
+    "create-contrast-app": "./src/index.js"
   },
   "scripts": {
     "lint": "biome check .",
@@ -31,6 +31,7 @@
   "engines": {
     "node": ">=20"
   },
+  "files": ["src", "templates", "LICENSE", "package.json"],
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },

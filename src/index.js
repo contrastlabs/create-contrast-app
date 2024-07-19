@@ -40,7 +40,7 @@ program
       return
     }
 
-    const templatesDir = join(import.meta.dirname, '../templates')
+    const templatesDir = join(__dirname, '../templates')
 
     const templateDir = join(templatesDir, template)
 
@@ -62,7 +62,7 @@ program
 
       console.log(colors.green('Projeto criado com sucesso!'))
     } catch (err) {
-      console.error(colors.red('Erro ao criar o projeto:', err))
+      console.error(colors.red('Erro ao criar o projeto:'), err)
     }
   })
 

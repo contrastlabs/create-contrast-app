@@ -9,7 +9,6 @@ pre-commit:
   parallel: true
   commands:
     lint:
-      glob: "*.{js,ts}"
       run: npm run lint:fix
       stage_fixed: true
     test:

@@ -1,2 +1,3 @@
 node_modules
 .docker
+templates/**/*/package-lock.json

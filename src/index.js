@@ -40,7 +40,7 @@ program
       return
     }
 
-    const templatesDir = join(__dirname, '../templates')
+    const templatesDir = join(import.meta.dirname, '../templates')
 
     const templateDir = join(templatesDir, template)
 
